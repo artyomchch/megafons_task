@@ -46,7 +46,6 @@ class NumberRecyclerAdapter(): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
         override fun areContentsTheSame(oldItem: RecyclerData, newItem: RecyclerData): Boolean {
-
             return true
 
         }

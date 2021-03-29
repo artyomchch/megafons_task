@@ -7,16 +7,17 @@ interface MainInterface {
     interface View{
         fun showWarning()
         fun closeWarning()
-        fun initRecyclerView(list: ArrayList<RecyclerData>)
-        fun submitNewElement(list: ArrayList<RecyclerData>)
+        fun initRecyclerView()
         fun asyncDeleteLastElement(index: Int)
+        fun submitList(list: ArrayList<RecyclerData>)
     }
 
     interface Presenter{
         fun addNewElement()
         fun getOriginalData():ArrayList<RecyclerData>
         fun getAddNumber():Int
-
+        fun setOriginalData(originalData: ArrayList<RecyclerData>)
+        fun stopRepeating()
 
     }
 
@@ -26,6 +27,7 @@ interface MainInterface {
         fun generateRandomElement()
         fun getAddNumber():Int
         fun deleteLastNumber()
+        fun setOriginalData(originalData: ArrayList<RecyclerData>)
 
     }
 }

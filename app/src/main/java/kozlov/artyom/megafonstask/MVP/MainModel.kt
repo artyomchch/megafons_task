@@ -24,13 +24,17 @@ class MainModel: MainInterface.Model {
 
     override fun generateRandomElement() {
         addNumber = (0..originalDataSet.size).random()
-        remakeDataSet = originalDataSet
+       // remakeDataSet = originalDataSet
         originalDataSet.add(addNumber ,RecyclerData(addNumber, generateString()))
     }
 
     override fun getAddNumber(): Int = addNumber
     override fun deleteLastNumber() {
         originalDataSet.removeLast()
+    }
+
+    override fun setOriginalData(originalData: ArrayList<RecyclerData>) {
+        originalDataSet = originalData
     }
 
     private fun generateString():String{ // Произовальная строка

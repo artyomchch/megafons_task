@@ -12,6 +12,7 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
     private var view: MainInterface.View = _view
     private var model: MainInterface.Model = MainModel()
     private var timeCheck = false
+
     private val mHandler = Handler() // для задержки времени
     private val mToastRunnable: Runnable = object : Runnable {
         override fun run() {
@@ -22,35 +23,36 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
             else{
                 mHandler.postDelayed(this, 1000)
                 asyncDeleteLastNumber()
+
             }
 
-            Log.d("test", "run: 1 sec")
         }
 
     }
+
     init {
 
         model.createOriginalDataSet()
-        view.initRecyclerView(model.getOriginalData())
-        view.submitNewElement(model.getOriginalData())
+        view.initRecyclerView()
+        view.submitList(model.getOriginalData())
         view.closeWarning()
         startRepeating()
 
-
     }
+
+
 
 
 
     override fun addNewElement() {
         if (model.getOriginalData().isNotEmpty()){
             model.generateRandomElement()
-            view.submitNewElement(model.getOriginalData())
+
         }
         else{
             timeCheck = false
             view.closeWarning()
             model.generateRandomElement()
-            view.submitNewElement(model.getOriginalData())
             startRepeating()
         }
 
@@ -61,14 +63,22 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
 
     override fun getOriginalData(): ArrayList<RecyclerData> = model.getOriginalData()
     override fun getAddNumber(): Int = model.getAddNumber()
+    override fun setOriginalData(originalData: ArrayList<RecyclerData>) {
+        model.setOriginalData(originalData)
+        view.submitList(model.getOriginalData())
+        if (model.getOriginalData().isEmpty()){
+            view.showWarning()
+            stopRepeating()
+        }
 
+    }
 
-
-
-
-    private fun stopRepeating(){
+    override fun stopRepeating() {
         mHandler.removeCallbacks(mToastRunnable)
     }
+
+
+
 
     private fun startRepeating(){
         mToastRunnable.run()
@@ -79,16 +89,13 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
 
         GlobalScope.launch {
             if (model.getOriginalData().isNotEmpty()){
-
                 returnDataOnMainThread(model.getOriginalData().size)// забираем посл. число
                 model.deleteLastNumber()
+                if (model.getOriginalData().size == 0){
+                    returnWarningView()
 
+                }
             }
-            else{
-                stopRepeating()
-                returnWarningView()
-            }
-
         }
 
     }
@@ -96,13 +103,14 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
     suspend fun returnDataOnMainThread(index: Int){ // переход в главный поток
         return withContext(Dispatchers.Main){
             Log.d("Thread", "from thread ${Thread.currentThread().name}")
+            Log.d("Thread", "1 sec")
             view.asyncDeleteLastElement(index)
         }
     }
 
     suspend fun returnWarningView(){ // переход в главный поток
         return withContext(Dispatchers.Main){
-            Log.d("Thread", "from thread ${Thread.currentThread().name}")
+            stopRepeating()
             view.showWarning()
         }
     }
