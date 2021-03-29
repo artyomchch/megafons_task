@@ -3,7 +3,10 @@ package kozlov.artyom.megafonstask.MVP
 import android.os.Handler
 import android.util.Log
 import android.widget.Toast
+import androidx.recyclerview.widget.DiffUtil
 import kotlinx.coroutines.*
+import kozlov.artyom.megafonstask.recycler_view.CardDiffUtilCallback
+import kozlov.artyom.megafonstask.recycler_view.NumberRecyclerAdapter
 import kozlov.artyom.megafonstask.recycler_view.RecyclerData
 import java.lang.Runnable
 
@@ -11,6 +14,7 @@ import java.lang.Runnable
 class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
     private var view: MainInterface.View = _view
     private var model: MainInterface.Model = MainModel()
+    private lateinit var numberAdapter: NumberRecyclerAdapter
     private var timeCheck = false
 
     private val mHandler = Handler() // для задержки времени
@@ -62,6 +66,10 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
 
 
     override fun getOriginalData(): ArrayList<RecyclerData> = model.getOriginalData()
+    override fun getRemakeData(): ArrayList<RecyclerData> = model.getRemakeData()
+
+
+
     override fun getAddNumber(): Int = model.getAddNumber()
     override fun setOriginalData(originalData: ArrayList<RecyclerData>) {
         model.setOriginalData(originalData)
@@ -77,7 +85,9 @@ class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
         mHandler.removeCallbacks(mToastRunnable)
     }
 
+    override fun diffUtilAdd() {
 
+    }
 
 
     private fun startRepeating(){

@@ -24,7 +24,7 @@ class MainModel: MainInterface.Model {
 
     override fun generateRandomElement() {
         addNumber = (0..originalDataSet.size).random()
-       // remakeDataSet = originalDataSet
+        remakeDataSet = originalDataSet
         originalDataSet.add(addNumber ,RecyclerData(addNumber, generateString()))
     }
 
@@ -36,6 +36,10 @@ class MainModel: MainInterface.Model {
     override fun setOriginalData(originalData: ArrayList<RecyclerData>) {
         originalDataSet = originalData
     }
+
+    override fun getRemakeData(): ArrayList<RecyclerData> = remakeDataSet
+
+
 
     private fun generateString():String{ // Произовальная строка
         return (1..75)

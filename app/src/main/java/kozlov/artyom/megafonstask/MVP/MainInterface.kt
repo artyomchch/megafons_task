@@ -15,9 +15,11 @@ interface MainInterface {
     interface Presenter{
         fun addNewElement()
         fun getOriginalData():ArrayList<RecyclerData>
+        fun getRemakeData():ArrayList<RecyclerData>
         fun getAddNumber():Int
         fun setOriginalData(originalData: ArrayList<RecyclerData>)
         fun stopRepeating()
+        fun diffUtilAdd()
 
     }
 
@@ -28,6 +30,7 @@ interface MainInterface {
         fun getAddNumber():Int
         fun deleteLastNumber()
         fun setOriginalData(originalData: ArrayList<RecyclerData>)
+        fun getRemakeData():ArrayList<RecyclerData>
 
     }
 }

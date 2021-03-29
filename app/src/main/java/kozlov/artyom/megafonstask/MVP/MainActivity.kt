@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
 import android.view.View
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -13,6 +14,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.activity_main.*
 import kozlov.artyom.megafonstask.R
+import kozlov.artyom.megafonstask.recycler_view.CardDiffUtilCallback
 import kozlov.artyom.megafonstask.recycler_view.NumberRecyclerAdapter
 import kozlov.artyom.megafonstask.recycler_view.RecyclerData
 import kozlov.artyom.megafonstask.recycler_view.TopSpacingItemDecoration
@@ -59,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainInterface.View {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         Log.d("check", "onRestoreInstanceState: ")
-       // savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT) // вотсановление местоположения
+        savedRecyclerLayoutState = savedInstanceState.getParcelable(BUNDLE_RECYCLER_LAYOUT) // вотсановление местоположения
 
         val json = savedInstanceState.getString("original_data")
         val typeToken = object : TypeToken<ArrayList<RecyclerData>>() {}.type
@@ -111,8 +113,7 @@ class MainActivity : AppCompatActivity(), MainInterface.View {
 
 
     override fun asyncDeleteLastElement(index: Int) {
-        numberAdapter.notifyDataSetChanged()
-        numberAdapter.notifyItemInserted(index)
+        numberAdapter.notifyItemRemoved(index)
     }
 
     override fun submitList(list: ArrayList<RecyclerData>) {
