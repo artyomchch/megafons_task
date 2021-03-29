@@ -9,13 +9,14 @@ interface MainInterface {
         fun closeWarning()
         fun initRecyclerView(list: ArrayList<RecyclerData>)
         fun submitNewElement(list: ArrayList<RecyclerData>)
+        fun asyncDeleteLastElement(index: Int)
     }
 
     interface Presenter{
         fun addNewElement()
-        fun deleteLastElement()
         fun getOriginalData():ArrayList<RecyclerData>
         fun getAddNumber():Int
+
 
     }
 
@@ -24,6 +25,7 @@ interface MainInterface {
         fun getOriginalData():ArrayList<RecyclerData>
         fun generateRandomElement()
         fun getAddNumber():Int
+        fun deleteLastNumber()
 
     }
 }

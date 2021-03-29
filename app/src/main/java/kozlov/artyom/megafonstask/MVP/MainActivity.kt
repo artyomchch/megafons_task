@@ -1,4 +1,4 @@
-package kozlov.artyom.megafonstask
+package kozlov.artyom.megafonstask.MVP
 
 import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +8,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.activity_main.*
-import kozlov.artyom.megafonstask.MVP.MainInterface
-import kozlov.artyom.megafonstask.MVP.MainPresenter
+import kozlov.artyom.megafonstask.R
 import kozlov.artyom.megafonstask.recycler_view.NumberRecyclerAdapter
 import kozlov.artyom.megafonstask.recycler_view.RecyclerData
 import kozlov.artyom.megafonstask.recycler_view.TopSpacingItemDecoration
-import kotlin.random.Random
 
 class MainActivity : AppCompatActivity(), MainInterface.View {
     private var presenter: MainPresenter? = null
@@ -40,9 +38,6 @@ class MainActivity : AppCompatActivity(), MainInterface.View {
         imageViewWarning.visibility = View.GONE
         text_warning.visibility = View.GONE
     }
-
-
-
     override fun initRecyclerView(list: ArrayList<RecyclerData>) {
         recycler_view.apply {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -67,10 +62,10 @@ class MainActivity : AppCompatActivity(), MainInterface.View {
         numberAdapter.submitList(list)
     }
 
-
-  
-
-
+    override fun asyncDeleteLastElement(index: Int) {
+        numberAdapter.notifyDataSetChanged()
+        numberAdapter.notifyItemInserted(index)
+    }
 
 
 }
