@@ -1,15 +1,22 @@
 package kozlov.artyom.megafonstask.MVP
 
+
+import io.github.serpro69.kfaker.Faker
+
+import io.github.serpro69.kfaker.FakerConfig
+import io.github.serpro69.kfaker.create
 import kozlov.artyom.megafonstask.recycler_view.RecyclerData
-import kotlin.random.Random
+
 
 class MainModel: MainInterface.Model {
 
     private var originalDataSet: ArrayList<RecyclerData> = arrayListOf()
     private var remakeDataSet: ArrayList<RecyclerData> = arrayListOf()
     private var addNumber: Int = 0
+    private val faker = Faker()
 
-    private val charPool : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+
+
 
 
     override fun createOriginalDataSet() {
@@ -41,12 +48,12 @@ class MainModel: MainInterface.Model {
 
 
 
-    private fun generateString():String{ // Произовальная строка
-        return (1..75)
-        .map { Random.nextInt(0, charPool.size) }
-            .map(charPool::get)
-            .joinToString("")
+    private fun generateString():String{
+        return faker.company.name()
     }
+
+
+
 
 
 

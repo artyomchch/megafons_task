@@ -14,7 +14,6 @@ import java.lang.Runnable
 class MainPresenter(_view: MainInterface.View): MainInterface.Presenter {
     private var view: MainInterface.View = _view
     private var model: MainInterface.Model = MainModel()
-    private lateinit var numberAdapter: NumberRecyclerAdapter
     private var timeCheck = false
 
     private val mHandler = Handler() // для задержки времени
